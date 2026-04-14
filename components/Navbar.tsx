@@ -225,7 +225,7 @@ export default function Navbar() {
   const [scrolled,    setScrolled]    = useState(false);
   const [mobileOpen,  setMobileOpen]  = useState(false);
   const [scrollY,     setScrollY]     = useState(0);
-  const { scrollY: scrollMotion } = useScroll();
+const scrollWidth = useTransform(scrollMotion, [0, 5000], ["0%", "100%"]);
 
   // Track scroll for background transition
   useEffect(() => {
@@ -320,7 +320,7 @@ export default function Navbar() {
           <motion.div
             className="absolute bottom-0 left-0 h-px bg-ak-gold/40"
             style={{
-              width: useTransform(scrollMotion, [0, 5000], ["0%", "100%"]),
+              width: scrollWidth,
             }}
           />
         )}
