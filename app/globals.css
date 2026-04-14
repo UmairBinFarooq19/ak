@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── BASE LAYER ──────────────────────────────────────────────────────────────*/
+@layer base {
+  :root {
+    /* Map CSS variables from tailwind config */
+    --color-cream:    #FAFAF5;
+    --color-espresso: #1A1412;
+    --color-gold:     #D4AF37;
+    --color-crimson:  #CC1100;
+    --color-stone:    #8C8880;
+    --color-mist:     #E8E6DF;
+
+    /* Navigation height tokens (also set in layout.tsx body class) */
+    --nav-h: 68px;
+  }
+
+  @media (min-width: 768px) {
+    :root { --nav-h: 76px; }
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering:  optimizeLegibility;
+    -webkit-font-smoothing:  antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-ak-cream text-ak-espresso;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  /* Scrollbar — minimal, brand-consistent */
+  ::-webkit-scrollbar             { width: 4px; }
+  ::-webkit-scrollbar-track       { background: var(--color-cream); }
+  ::-webkit-scrollbar-thumb       { background: var(--color-mist); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-stone); }
+
+  /* Focus visible — gold ring (accessibility + brand) */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  :focus:not(:focus-visible) { outline: none; }
+
+  /* Text selection */
+  ::selection {
+    background-color: rgba(212, 175, 55, 0.2);
+    color:            var(--color-espresso);
+  }
+
+  /* Headings default serif */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+    text-wrap: balance;
+  }
+
+  /* Body copy default sans */
+  p, li, td, th {
+    @apply font-sans;
+    text-wrap: pretty;
+  }
+
+  /* Links — no default underline; each component handles its own */
+  a { text-decoration: none; }
+
+  /* Image — sane defaults */
+  img, video { max-width: 100%; display: block; }
+}
+
+/* ── COMPONENT LAYER ─────────────────────────────────────────────────────────*/
+@layer components {
+
+  /* Container */
+  .container-content {
+    @apply max-w-content mx-auto px-6 md:px-10;
+  }
+
+  /* Section spacing */
+  .section-padding {
+    padding-top:    clamp(5rem, 10vw, 9rem);
+    padding-bottom: clamp(5rem, 10vw, 9rem);
+  }
+
+  /* Typography — editorial display */
+  .type-display {
+    @apply font-serif tracking-tight leading-none;
+    font-feature-settings: "kern" 1, "liga" 1, "swsh" 1;
+  }
+
+  /* Eyebrow label */
+  .type-eyebrow {
+    @apply font-sans text-label uppercase tracking-[0.28em] text-ak-gold;
+  }
+
+  /* Body text */
+  .type-body {
+    @apply font-sans text-body-lg text-ak-stone leading-relaxed;
+  }
+
+  /* ── Buttons ── */
+  .btn-luxury {
+    @apply relative inline-flex items-center gap-2.5
+      border border-ak-gold text-ak-gold
+      font-sans text-label uppercase tracking-[0.22em]
+      overflow-hidden transition-colors duration-500
+      hover:text-ak-espresso;
+
+    &::before {
+      content: '';
+      @apply absolute inset-0 bg-ak-gold
+        translate-y-[101%] transition-transform duration-500;
+      transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    &:hover::before { @apply translate-y-0; }
+
+    & > * { @apply relative z-10; }
+  }
+
+  .btn-luxury-dark {
+    @apply relative inline-flex items-center gap-2.5
+      bg-ak-espresso text-white
+      font-sans text-label uppercase tracking-[0.22em]
+      overflow-hidden transition-colors duration-500
+      hover:text-ak-espresso;
+
+    &::before {
+      content: '';
+      @apply absolute inset-0 bg-ak-gold
+        translate-x-[-101%] transition-transform duration-500;
+      transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    &:hover::before { @apply translate-x-0; }
+
+    & > * { @apply relative z-10; }
+  }
+
+  /* ── Gold rule divider ── */
+  .gold-rule {
+    @apply h-px bg-gradient-to-r from-transparent via-ak-gold/50 to-transparent my-1;
+  }
+
+  /* ── Card base ── */
+  .card-base {
+    @apply bg-ak-espresso rounded-2xl overflow-hidden shadow-luxury
+      transition-shadow duration-400 hover:shadow-luxury-lg;
+  }
+
+  /* ── Image hover zoom (text stays static) ──
+     Apply to the <div> wrapping next/image, not the Image itself */
+  .img-zoom-wrapper {
+    @apply overflow-hidden;
+    & img {
+      @apply transition-transform duration-700 ease-out;
+      transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    &:hover img { @apply scale-[1.06]; }
+  }
+
+  /* ── Nav link with animated underline ── */
+  .nav-link {
+    @apply relative font-sans text-label uppercase tracking-[0.18em] text-white/70
+      hover:text-white transition-colors duration-300;
+
+    &::after {
+      content: '';
+      @apply absolute -bottom-0.5 left-0 w-0 h-px bg-ak-gold
+        transition-[width] duration-300 ease-out;
+    }
+    &:hover::after { @apply w-full; }
+  }
+}
+
+/* ── UTILITIES LAYER ─────────────────────────────────────────────────────────*/
+@layer utilities {
+
+  /* Prevent layout shift on scroll bars */
+  .scroll-lock     { overflow: hidden; }
+  .scrollbar-hide  { scrollbar-width: none; -ms-overflow-style: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  /* Text balance / pretty */
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  /* Gradient text */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #D4AF37 0%, #E8CC6A 50%, #A88A20 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Luxury backdrop */
+  .bg-luxury-blur {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+  }
+
+  /* Noise texture overlay utility */
+  .noise-overlay {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 192px;
+    }
+  }
+
+  /* Animation delay utilities (for staggered reveals outside Framer Motion) */
+  .delay-100  { animation-delay: 100ms;  }
+  .delay-200  { animation-delay: 200ms;  }
+  .delay-300  { animation-delay: 300ms;  }
+  .delay-400  { animation-delay: 400ms;  }
+  .delay-500  { animation-delay: 500ms;  }
+  .delay-600  { animation-delay: 600ms;  }
+  .delay-800  { animation-delay: 800ms;  }
+  .delay-1000 { animation-delay: 1000ms; }
+
+  /* Fill remaining viewport height */
+  .min-h-screen-nav {
+    min-height: calc(100vh - var(--nav-h));
+  }
+
+  /* Aspect ratio utilities (supplement Tailwind built-ins) */
+  .aspect-editorial  { aspect-ratio: 4 / 5;  }
+  .aspect-cinematic  { aspect-ratio: 21 / 9; }
+}
