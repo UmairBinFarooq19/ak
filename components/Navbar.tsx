@@ -41,7 +41,7 @@ const NAV_LINKS = [
   { label: "About",  href: "/about",   children: null },
   { label: "Blog",   href: "/blog",    children: null },
   { label: "Prices", href: "/pricing", children: null },
-] as const;
+];
 
 // ── SUB-TYPES ─────────────────────────────────────────────────────────────────
 type NavChild = { label: string; href: string; tag: string | null };
