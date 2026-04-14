@@ -224,8 +224,9 @@ function DesktopDropdown({ item }: { item: NavItem }) {
 export default function Navbar() {
   const [scrolled,    setScrolled]    = useState(false);
   const [mobileOpen,  setMobileOpen]  = useState(false);
-const { scrollY: scrollMotion } = useScroll();
-const scrollWidth = useTransform(scrollMotion, [0, 5000], ["0%", "100%"]);
+  const [scrollY,     setScrollY]     = useState(0);
+  const { scrollY: scrollMotion } = useScroll();
+  const scrollWidth = useTransform(scrollMotion, [0, 5000], ["0%", "100%"]);
 
   // Track scroll for background transition
   useEffect(() => {
