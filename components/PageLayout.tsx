@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Navbar from "./Navbar";
- 
+
 interface Stat { label: string; value: string; }
 interface PageLayoutProps {
   title: string;
@@ -14,7 +14,7 @@ interface PageLayoutProps {
   ctaLabel?: string;
   ctaHref?: string;
 }
- 
+
 export default function PageLayout({
   title, subtitle, description, image, badge, stats, children, ctaLabel = "Book Now — Free Quote", ctaHref = "https://wa.me/919797877243"
 }: PageLayoutProps) {
@@ -37,7 +37,7 @@ export default function PageLayout({
           <p className="font-sans text-body-lg text-white/70 max-w-xl">{subtitle}</p>
         </div>
       </section>
- 
+
       {/* Stats bar */}
       {stats && stats.length > 0 && (
         <div className="bg-ak-espresso border-b border-white/10">
@@ -51,7 +51,7 @@ export default function PageLayout({
           </div>
         </div>
       )}
- 
+
       {/* Main content */}
       <main className="bg-ak-cream-100 min-h-screen">
         <div className="max-w-content mx-auto px-6 md:px-10 py-16">
@@ -87,7 +87,7 @@ export default function PageLayout({
           </div>
         </div>
       </main>
- 
+
       {/* Footer */}
       <footer className="bg-ak-espresso border-t border-white/10 py-10">
         <div className="max-w-content mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -99,4 +99,3 @@ export default function PageLayout({
     </>
   );
 }
- 

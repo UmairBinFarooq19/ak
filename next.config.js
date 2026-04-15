@@ -5,6 +5,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Suppress 404 warnings for missing static pages in export
+  typescript: {
+    ignoreBuildErrors: false,
+  },
 };
 
 module.exports = nextConfig;
